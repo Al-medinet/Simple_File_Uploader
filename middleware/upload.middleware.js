@@ -1,5 +1,9 @@
 const multer = require("multer");
 
+/**
+ * Accept a key of mimeType 
+ * @param target: the mimeType for files 
+ */
 function getExtension(target) {
   const MIME_TYPE_MAP = {
     "image/png": "png",
@@ -16,8 +20,9 @@ const storage = multer.diskStorage({
     cb(null, "images");
   },
   filename: (req, file, cb) => {
-    cb(null, "file - " + Date.now() + "." + getExtension(file.mimetype));
+    cb(null, `file - ${Date.now()} . ${getExtension(file.mimetype)}`);
   }
 });
-const uploader = multer({ storage }).array("documents", 2);
+const NUMBEROFFILES = 2;
+const uploader = multer({ storage }).array("documents", NUMBEROFFILES);
 exports.upload = uploader;
